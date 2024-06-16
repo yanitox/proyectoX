@@ -9,6 +9,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'miArgentina',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -21,35 +22,64 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xFF00A5DB),
-        title: Column(
-          children: [
-            Text('miArgentina'),
-            Text(
-              '¡Hola, Yannick!',
-              style: TextStyle(fontSize: 16),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(100.0), // Aumenta la altura del header
+        child: AppBar(
+          backgroundColor: Color(0xFF37bbec),
+          title: Padding(
+            padding: const EdgeInsets.only(top: 16.0), // Ajusta el padding superior del header
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                  icon: Image.asset(
+                    'lib/img/menuNav.png',
+                    width: 32, // Aumenta el tamaño del ícono
+                    height: 32,
+                  ),
+                  onPressed: () {},
+                ),
+                Image.asset(
+                  'lib/img/logoMiArg.png',
+                  height: 32, // Aumenta el tamaño del logo
+                ),
+                IconButton(
+                  icon: Image.asset(
+                    'lib/img/logoPerfil.png',
+                    width: 32, // Aumenta el tamaño del ícono
+                    height: 32,
+                  ),
+                  onPressed: () {},
+                ),
+              ],
             ),
-          ],
+          ),
+          centerTitle: true,
         ),
-        centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  children: [
-                    Row(
+      body: Container(
+        color: Colors.grey.shade200, // Fondo de la página en gris claro
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Card(
+                  color: Colors.white, // Fondo de la tarjeta en blanco
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    side: BorderSide(color: Colors.grey.withOpacity(0.3)), // Borde más claro
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(24.0), // Aumentar padding
+                    child: Row(
                       children: [
-                        Icon(Icons.calendar_today, color: Color(0xFF00A5DB), size: 40),
+                        Image.asset(
+                          'lib/img/solicitarTurno.png',
+                          width: 70, // Aumentar el tamaño de la imagen
+                          height: 70,
+                        ),
                         SizedBox(width: 10),
                         Expanded(
                           child: Column(
@@ -57,64 +87,77 @@ class HomePage extends StatelessWidget {
                             children: [
                               Text(
                                 'No tenés turnos programados',
-                                style: TextStyle(fontSize: 18),
+                                style: TextStyle(fontSize: 16, color: Colors.black), // Texto en negro
                               ),
                               SizedBox(height: 10),
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Color(0xFF00A5DB),
-                                ),
-                                onPressed: () {},
-                                child: Text('Solicitalo acá'),
+                              Row(
+                                children: [
+                                  Spacer(),
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Color(0xFF3773BC),
+                                      padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                                    ),
+                                    onPressed: () {},
+                                    child: FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      child: Text(
+                                        'Solicitalo acá',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                  Spacer(),
+                                ],
                               ),
                             ],
                           ),
                         ),
                       ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
-            SizedBox(height: 20),
-            Expanded(
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Mis servicios',
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(height: 20),
-                      Expanded(
-                        child: GridView.count(
+                SizedBox(height: 20),
+                Card(
+                  color: Colors.white, // Fondo de la tarjeta en blanco
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    side: BorderSide(color: Colors.grey.withOpacity(0.3)), // Borde más claro
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Mis servicios',
+                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(height: 20),
+                        GridView.count(
                           crossAxisCount: 3,
                           crossAxisSpacing: 10,
                           mainAxisSpacing: 10,
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
                           children: [
-                            ServiceIcon(icon: Icons.person, label: 'Mis documentos', color: Color(0xFF4A90E2)),
-                            ServiceIcon(icon: Icons.directions_car, label: 'Mis vehículos', color: Color(0xFFF5A623)),
-                            ServiceIcon(icon: Icons.favorite, label: 'Mi salud', color: Color(0xFFD0021B)),
-                            ServiceIcon(icon: Icons.work, label: 'Mi trabajo', color: Color(0xFF7ED321)),
-                            ServiceIcon(icon: Icons.calendar_today, label: 'Mis turnos', color: Color(0xFF50E3C2)),
-                            ServiceIcon(icon: Icons.attach_money, label: 'Mis cobros', color: Color(0xFFB8E986)),
-                            ServiceIcon(icon: Icons.assignment, label: 'Mis trámites', color: Color(0xFF9013FE)),
-                            ServiceIcon(icon: Icons.child_care, label: 'Mis hijos', color: Color(0xFFF8E71C)),
+                            ServiceIcon(imagePath: 'lib/img/iconoDocumentos.png', label: 'Mis documentos'),
+                            ServiceIcon(imagePath: 'lib/img/iconoVehiculos.png', label: 'Mis vehículos'),
+                            ServiceIcon(imagePath: 'lib/img/iconoSalud.png', label: 'Mi salud'),
+                            ServiceIcon(imagePath: 'lib/img/iconoTrabajo.png', label: 'Mi trabajo'),
+                            ServiceIcon(imagePath: 'lib/img/iconoTurnos.png', label: 'Mis turnos'),
+                            ServiceIcon(imagePath: 'lib/img/iconoCobros.png', label: 'Mis cobros'),
+                            ServiceIcon(imagePath: 'lib/img/iconoTramites.png', label: 'Mis trámites'),
+                            ServiceIcon(imagePath: 'lib/img/iconoHijos.png', label: 'Mis hijos'),
                           ],
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -145,39 +188,44 @@ class HomePage extends StatelessWidget {
 }
 
 class ServiceIcon extends StatelessWidget {
-  final IconData icon;
+  final String imagePath;
   final String label;
-  final Color color;
 
-  const ServiceIcon({required this.icon, required this.label, required this.color});
+  const ServiceIcon({required this.imagePath, required this.label});
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: InkWell(
-        onTap: () {},
-        child: Center(
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        double imageSize = constraints.maxWidth * 0.6; // Ajusta el tamaño basado en el espacio disponible
+        return InkWell(
+          onTap: () {
+            // Agrega la funcionalidad que desees aquí
+          },
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                width: 50,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: color,
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(icon, size: 30, color: Colors.white),
+              Image.asset(
+                imagePath,
+                width: imageSize,
+                height: imageSize,
               ),
               SizedBox(height: 10),
-              Text(label, textAlign: TextAlign.center),
+              Flexible(
+                child: Text(
+                  label,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14, // Ajusta el tamaño de la fuente
+                    overflow: TextOverflow.ellipsis, // Asegura que el texto no se divida
+                  ),
+                ),
+              ),
             ],
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
+
